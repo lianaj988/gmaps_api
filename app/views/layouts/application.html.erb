@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GmapsApp</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <%= yield %>
+     <script>
+
+      function initMap() {
+
+        var latLong = {lat: -25.363, lng: 131.044};
+
+        var image = "<%= asset_path 'flamingo.png'%>";
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          center: latLong,
+          scrollwheel: false
+        });
+
+        var marker = new google.maps.Marker({
+          position: latLong,
+          map: map,
+          title: 'Stronbox West',
+          icon: image,
+          animation: google.maps.Animation.BOUNCE
+        });
+
+        var contentString = '<h2>Stronbox West</h2>' + '<p>Where all your dreams come true.</p>';
+
+        var infowindow = new google.maps.InfoWindow({
+          content: contentString
+        });
+
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.open(map,marker);
+        });
+      }
+  </script>
+
+      <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMgxAKsWOZUAa2dPbCZK4SZoxjghnJCaM&callback=initMap">
+      </script>
+  </body>
+</html>
